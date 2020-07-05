@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Blog Post - Start Bootstrap Template</title>
+
+ <link href="{% static 'css/detail/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'css/detail/css/blog-post.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Magichanee</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="http://127.0.0.1:8000/">처음으로
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/blogMain/">메인화면</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com/Kchangyu"  target=_blank>페이스북</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.instagram.com/magichanee/"  target=_blank>인스타그램</a>
+          </li>
+
+
+{% if user.is_authenticated %}
+    <p>{{request.user.username}}님 안녕하세요!</p>
+    <a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a>
+    <form id="logout" action="{% url 'signout' %}" method="POST" >
+        {% csrf_token %} <input type="hidden" />
+    </form>
+{% else %}
+    <a href="{% url 'signup' %}">회원가입</a><br/>
+    <a href="{% url 'signin' %}">로그인</a><br/>
+{% endif %}
+
+
+{% block content %}
+{% endblock %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+<br>
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+     <!-- Post Content Column -->
+      <div class="col-lg-8">
+        <!-- Title -->
+       <h1> {{ blog_detail.title }} </h1>
+          <!-- Date/Time -->
+        <p>{{ blog_detail.pub_date }}</p>
+        <!-- Author -->
+        <p class="lead" align="right">
+          
+          글쓴이 :
+          <a href="#">{{ blog_detail.author }}</a>
+        </p>
+  </div>
+    <!-- /.row -->
+  </div>
+
+  <div class="row" id='asdknlaskdnas'>
+    <div class=".col-6">
+
+        <br><br>
+        <!-- Post Content -->
+        {{ blog_detail.body | safe }}
+        <br><br>
+        <hr>
+      </div>
+
+    <div class=".col-6">
+      <!-- Sidebar Widgets Column -->
+
+        <!-- Search Widget -->
+        <div style="text-align:center;">
+        <div class="card my-4">
+
+          <h4 class="card-header"><center>한신대학교</center></h4>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="it-경영 201525029">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">곽찬규</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h3 class="card-header">카테고리</h3>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">A</a>
+                  </li>
+                  <li>
+                    <a href="#">B</a>
+                  </li>
+                  <li>
+                    <a href="#">C</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">D</a>
+                  </li>
+                  <li>
+                    <a href="#">E</a>
+                  </li>
+                  <li>
+                    <a href="#">F</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">오늘의 명언</h5>
+          <div class="card-body">
+         There is more to life than increasing its speed.
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Comments Form -->
+            <center>  <div class="card my-4">
+                <h5 class="card-header">찰 칵</h5>
+                <div class="card-body">
+                    <form method="POST">
+                        <img src="/media/uploads/2020/06/11/me.jpg"width="340">
+                    </form>
+                </div>
+              </div>
+            </center>
+
+
+            <!-- Single Comment -->
+            {% for comment in comments %}
+
+              <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.comment_date }}</h5>
+                        <h5 class="mt-0">닉네임 : {{ comment.comment_user }}</h5>
+                        <h5 class="mt-0">제목 : {{ comment.comment_thumbnail_url }}</h5>
+                        <h5 class="mt-0">본문 : {{ comment.comment_textfield }}</h5>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+            <!-- Comment with nested comments -->
+
+        </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-4 bg-noon">
+    <center> <div class="card my-4">
+                <h5 class="card-header">서버가 렉이 걸린건가? </h5>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">{{ comment_form }}</div>
+                        <button type="submit" class="btn btn-primary">카카오톡으로 확인하기</button>
+                    </form>
+                </div>
+              </div>
+        </center>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

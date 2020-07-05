@@ -1,0 +1,25 @@
+<!-- signin.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+
+<form action="{% url 'signin' %}" method='POST'>
+    {% csrf_token %}
+    Username:
+    <input type='text' name='username'/><br/>
+    <br>
+    Password:
+    <input type='password' name='password'/><br/>
+    <br>
+    <input type='submit' value='로그인'/>
+</form>
+
+</center>
+
+{% endblock %}

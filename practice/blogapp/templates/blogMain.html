@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+ #상속하기!
+{% block content %}
+
+
+
+    <br>
+
+
+
+    {% for blog in blogs %}
+        <center><main role="main" class="container">
+            <div class="jumbotron">
+                <h1>제목 : {{ blog.title }}</h1>
+                <br>
+                <h4>작성일 : {{ blog.pub_date }}</h4>
+                <h4>작성자 : {{ blog.author }}</h4>
+                <br>
+                <p class="lead">{{ blog.body | safe }}</p>
+                <br>
+               <a class="btn btn-lg btn-primary"
+                  href="{% url 'detail' blog.id %}"
+                  role="button">게시글로 이동 &raquo;</a>
+
+            </div></center>
+        </main>
+    {% endfor %}
+
+{% endblock %}
